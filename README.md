@@ -3,6 +3,20 @@ Social Media and News Analytics Approach build using Azure Synapse Pipelines, Az
 
 
 
+## Introduction
+
+TBD
+
+
+
+## The objective
+
+TBD
+
+![ArchDiagram](https://raw.githubusercontent.com/ekote/sman-analytics/main/assets/synapse-pipeline-diagram.png) 
+
+
+
 ## Ingredients
 
 - [Azure Synapse Analytics](https://docs.microsoft.com/en-us/azure/synapse-analytics/overview-what-is) 
@@ -12,8 +26,6 @@ Social Media and News Analytics Approach build using Azure Synapse Pipelines, Az
 - [Azure Cognitive Services - Text Analytics](https://azure.microsoft.com/en-us/services/cognitive-services/text-analytics/)
   - [Text translation](https://docs.microsoft.com/en-us/azure/cognitive-services/translator/)
   - [Sentiment analysis](https://docs.microsoft.com/en-us/azure/cognitive-services/language-service/sentiment-opinion-mining/overview)
-
-
 
 ## Recipe
 
@@ -57,19 +69,21 @@ Social Media and News Analytics Approach build using Azure Synapse Pipelines, Az
 
 ### Lessons learnt
 
-- comments/posts/any text - "," comma is not the best delimiter or it can be, but remove commas from the text.
+- if you work work with comments or posts or just any text then comma "," is not the best delimiter. It still can be, but remove commas from the text e.g. `comment['comment_text'].replace(',', ' ')`
+
 - Facebook bans too active users `raise exceptions.TemporarilyBanned(title.text)
   facebook_scraper.exceptions.TemporarilyBanned: You’re Temporarily Blocked`
-- 
+
+  
 
 
 
 ## Production deployment - to consider
 
-- [ ] Azure Synapse Pipeline schedule
-- [ ] Facebook scraper - scheduling daily/weekly
+- [ ] Azure Synapse Pipeline schedule and / or Facebook scraper - scheduling daily/weekly
 - [ ] Using Azure Functions for scraping
 - [ ] Instead of open-sourced library use professional scraper like [Apify](https://apify.com/pocesar/facebook-pages-scraper)
 - [ ] Want to add Twitter as the data source? [Check this little library - twitter-scraper](https://github.com/bisguzar/twitter-scraper)
+- [ ] Want to add YouTube as the data source? [Check this article.](https://techcommunity.microsoft.com/t5/azure-synapse-analytics-blog/azure-synapse-pipelines-for-social-media-youtube-example/ba-p/2615156)
 
 
