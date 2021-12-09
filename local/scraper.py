@@ -10,14 +10,14 @@ def create_output_files_struct():
         os.makedirs(path)
 
     save_posts_to_csv(
-        ["id", "page", "post_id", "time", "post_url", "images_lowquality", "likes", "comments_number", "shares",
+        ["page", "post_id", "time", "post_url", "images_lowquality", "likes", "comments_number", "shares",
          "text", "reaction_count", "reactions_likes", "reactions_care", "reactions_haha", "reactions_wow",
          "reactions_love", "reactions_angry", "was_live"])
 
-    save_comments_to_csv(["id", "page", "comment_id", "comment_text", "comment_time", "comment_url", "commenter_name",
+    save_comments_to_csv(["page", "comment_id", "comment_text", "comment_time", "comment_url", "commenter_name",
                           "commenter_url", "replies_number", "post_id"])
 
-    save_reactors_to_csv(["id", "link", "name", "type", "post_id"])
+    save_reactors_to_csv(["link", "name", "type", "post_id"])
 
 
 def get_and_save_posts(page: str):
@@ -36,7 +36,6 @@ def get_and_save_posts(page: str):
 
         if post['reactions']:
             save_posts_to_csv([
-                p_no,
                 page,
                 post['post_id'],
                 post['time'],
@@ -57,7 +56,6 @@ def get_and_save_posts(page: str):
             ])
         else:
             save_posts_to_csv([
-                p_no,
                 page,
                 post['post_id'],
                 post['time'],
@@ -80,7 +78,6 @@ def get_and_save_posts(page: str):
         if post['reactors']:
             for reactor in post['reactors']:
                 save_reactors_to_csv([
-                    r_no,
                     reactor['link'],
                     reactor['name'],
                     reactor['type'],
@@ -101,7 +98,6 @@ def get_and_save_posts(page: str):
                                               "allow_extra_requests": True}))
                 for comment in org['comments_full']:
                     save_comments_to_csv([
-                        c_no,
                         page,
                         comment['comment_id'],
                         comment['comment_text'].replace(',', ' '),
@@ -121,7 +117,7 @@ def get_and_save_posts(page: str):
             except TypeError:
                 print("TypeError for post_id=" + post["post_id"])
 
-        if p_no in range(500, 9000, 500):
+        if p_no in range(249, 9000, 100):
             print(">>>> Delay for a five minutes to avoid being blocked.")
             time.sleep(300)
 
@@ -161,14 +157,16 @@ def get_posts_from_fb(page: str):
 
 
 if __name__ == "__main__":
-    pages = ('Microsoft.Polska', 'MicrosoftCEE', 'MicrosoftUKEducation', 'Microsoft')
+    pages = ('MicrosoftUKEducation', 'Microsoft', 'Microsoft.Polska', 'MicrosoftCEE')
     project_name = "microsoft"
     date = "08_12_2021"
-    pages_no = 100
+    pages_no = 10 # 100
     cookie_file = "cookie.json"
     path = project_name + '/' + date + '/'
+    first_run = False
 
-    create_output_files_struct()
+    if first_run:
+        create_output_files_struct()
 
     for page in pages:
         get_and_save_posts(page)
