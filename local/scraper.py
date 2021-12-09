@@ -96,7 +96,7 @@ def get_and_save_posts(page: str):
             print("Downloading comments...")
             try:
                 org = next(get_posts(post_urls=[post["post_id"]],
-                                     cookies=coockie_file,
+                                     cookies=cookie_file,
                                      options={"comments": True,
                                               "allow_extra_requests": True}))
                 for comment in org['comments_full']:
@@ -126,14 +126,14 @@ def get_and_save_posts(page: str):
             time.sleep(300)
 
 
-def save_reactors_to_csv(data):
+def save_comments_to_csv(data):
     with open(path + project_name + "_comments.csv", "a", newline='') as comments_file:
         writer = csv.writer(comments_file)
         writer.writerow(data)
     return comments_file
 
 
-def save_comments_to_csv(data):
+def save_reactors_to_csv(data):
     with open(path + project_name + "_reactors.csv", "a", newline='') as reactors_file:
         writer = csv.writer(reactors_file)
         writer.writerow(data)
@@ -150,7 +150,7 @@ def save_posts_to_csv(data):
 def get_posts_from_fb(page: str):
     return get_posts(page,
                      pages=pages_no,
-                     cookies=coockie_file,
+                     cookies=cookie_file,
                      extra_info=True,
                      options={
                          "reactions": True,
@@ -165,7 +165,7 @@ if __name__ == "__main__":
     project_name = "microsoft"
     date = "08_12_2021"
     pages_no = 100
-    coockie_file = "cookie.json"
+    cookie_file = "cookie.json"
     path = project_name + '/' + date + '/'
 
     create_output_files_struct()
