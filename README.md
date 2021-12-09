@@ -44,15 +44,16 @@ TBD
       1. Adjust the parameters from the file `scraper.py`:
 
       ```python
-      pages = ('Microsoft.Polska', 'MicrosoftCEE', 'MicrosoftUKEducation', 'Microsoft')
+      pages = ('Microsoft.Polska', 'Microsoft', 'MicrosoftCEE', 'MicrosoftUKEducation')
       project_name = "microsoft"
-      date = "08_12_2021"
-      pages_no = 100
-      coockie_file = "cookie.json"
+      date = "09_12_2021"
+      pages_no = 10  # 100
+      set_cookies("cookie.json")
+      first_run: bool = True  # False will append to files previously created
       ```
 
       6. Run the cell `!python scraper.py` that will run the scraper script. 
-      7. Sample results available in the folder `microsoft`
+      7. Sample results available in the folder `bronze/microsoft`. 
       8. It will take a couple of minutes (or hours, it depends) to complete it. Once it's done - run the last cells that will upload data to a proper place on ADLS that is also connected with Synapse.  
 
    2. Azure Machine Learning Notebook with Compute cluster 
@@ -74,13 +75,19 @@ TBD
 - Facebook bans too active users `raise exceptions.TemporarilyBanned(title.text)
   facebook_scraper.exceptions.TemporarilyBanned: You’re Temporarily Blocked`
 
+  - Rotate cookies of different facebook accounts
+  - Use IP addresses that have extremely high FB traffic (*e.g., Starbucks/University WiFi, etc.*)
+  - Use clean IP addresses that you haven't scraped with before (*e.g., build a proxy server or OpenVPN server in Azure/AWS/GCP/etc.*)
+  - Generate your cookies from a clean IP using a browser that matches the User Agent in the fb-scraper tool `"User-Agent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Mobile Safari/537.36"`
+
   
 
 
 
-## Production deployment - to consider
+## To discuss
 
 - [ ] Azure Synapse Pipeline schedule and / or Facebook scraper - scheduling daily/weekly
+- [ ] Starting scraping from certain page/point instead of beginning 
 - [ ] Using Azure Functions for scraping
 - [ ] Instead of open-sourced library use professional scraper like [Apify](https://apify.com/pocesar/facebook-pages-scraper)
 - [ ] Want to add Twitter as the data source? [Check this little library - twitter-scraper](https://github.com/bisguzar/twitter-scraper)

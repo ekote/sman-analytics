@@ -1,6 +1,6 @@
 import os
 import time
-
+import random
 from facebook_scraper import *
 
 
@@ -115,9 +115,10 @@ def get_and_save_posts(page: str):
             except TypeError:
                 print("TypeError for post_id=" + post["post_id"])
 
-        if p_no in range(249, 9000, 50):
+        time.sleep(random.randint(4, 17))
+        if p_no in range(149, 9000, 50):
             print(">>>> Delay for a five minutes to avoid being blocked.")
-            time.sleep(300)
+            time.sleep(random.randint(240, 360))
 
 
 def save_to_csv(file: str, row: list):
@@ -129,24 +130,24 @@ def save_to_csv(file: str, row: list):
 
 
 def get_posts_from_fb(page: str):
-    return get_posts(page,
-                     pages=pages_no,
+    return get_posts(account=page,
+                     page_limit=None,
                      extra_info=True,
                      options={
                          "reactions": True,
                          "reactors": "generator",
                          "posts_per_page": 50,
-                         "allow_extra_requests": True
+                         "allow_extra_requests": True  # True if high quality image links needed and post full text
                      })
 
 
 if __name__ == "__main__":
-    pages = ('Microsoft.Polska', 'Microsoft', 'MicrosoftCEE', 'MicrosoftUKEducation')
+    pages = ('MicrosoftCEE', 'Microsoft', 'MicrosoftUKEducation', 'Microsoft.Polska')
     project_name = "microsoft"
     date = "09_12_2021"
-    pages_no = 10
+    pages_no = 10  # 100
     set_cookies("cookie.json")
-    first_run = True
+    first_run: bool = False  # False will append to files previously created
 
     if first_run:
         create_output_files_struct()
