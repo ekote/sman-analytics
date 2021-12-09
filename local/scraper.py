@@ -1,23 +1,23 @@
-import csv
 import os
 import time
 
-from facebook_scraper import get_posts
+from facebook_scraper import *
 
 
 def create_output_files_struct():
+    path = f"{project_name}/{date}"
     if not os.path.exists(path):
         os.makedirs(path)
 
-    save_posts_to_csv(
-        ["page", "post_id", "time", "post_url", "images_lowquality", "likes", "comments_number", "shares",
-         "text", "reaction_count", "reactions_likes", "reactions_care", "reactions_haha", "reactions_wow",
-         "reactions_love", "reactions_angry", "was_live"])
+    save_to_csv("posts",
+                ["page", "post_id", "time", "post_url", "images_lowquality", "likes", "comments_number", "shares",
+                 "text", "reaction_count", "reactions_likes", "reactions_care", "reactions_haha", "reactions_wow",
+                 "reactions_love", "reactions_angry", "was_live"])
 
-    save_comments_to_csv(["page", "comment_id", "comment_text", "comment_time", "comment_url", "commenter_name",
-                          "commenter_url", "replies_number", "post_id"])
+    save_to_csv("comments", ["page", "comment_id", "comment_text", "comment_time", "comment_url", "commenter_name",
+                             "commenter_url", "replies_number", "post_id"])
 
-    save_reactors_to_csv(["link", "name", "type", "post_id"])
+    save_to_csv("reactors", ["link", "name", "type", "post_id"])
 
 
 def get_and_save_posts(page: str):
@@ -35,7 +35,7 @@ def get_and_save_posts(page: str):
         # print("-----------------------------------------------------------------")
 
         if post['reactions']:
-            save_posts_to_csv([
+            save_to_csv("posts", [
                 page,
                 post['post_id'],
                 post['time'],
@@ -55,7 +55,7 @@ def get_and_save_posts(page: str):
                 post['was_live']
             ])
         else:
-            save_posts_to_csv([
+            save_to_csv("posts", [
                 page,
                 post['post_id'],
                 post['time'],
@@ -77,13 +77,12 @@ def get_and_save_posts(page: str):
 
         if post['reactors']:
             for reactor in post['reactors']:
-                save_reactors_to_csv([
+                save_to_csv("reactors", [
                     reactor['link'],
                     reactor['name'],
                     reactor['type'],
                     post['post_id']
                 ])
-                # print(f">>>> REACTOR NO={post_counter}")
                 r_no = r_no + 1
 
         print(f">>>> POST NO={p_no}")
@@ -93,11 +92,10 @@ def get_and_save_posts(page: str):
             print("Downloading comments...")
             try:
                 org = next(get_posts(post_urls=[post["post_id"]],
-                                     cookies=cookie_file,
-                                     options={"comments": True,
+                                     options={"comments": "generator",
                                               "allow_extra_requests": True}))
                 for comment in org['comments_full']:
-                    save_comments_to_csv([
+                    save_to_csv("comments", [
                         page,
                         comment['comment_id'],
                         comment['comment_text'].replace(',', ' '),
@@ -110,43 +108,29 @@ def get_and_save_posts(page: str):
                     ])
                     time.sleep(3)
                     print(f">>>> COMMENT NUMBER={c_no}")
-                    if c_no in range(100, 50000, 100):
+                    if c_no in range(100, 50000, 50):
                         print(">>>> Delay for a five minutes to avoid being blocked.")
                         time.sleep(300)
                     c_no = c_no + 1
             except TypeError:
                 print("TypeError for post_id=" + post["post_id"])
 
-        if p_no in range(249, 9000, 100):
+        if p_no in range(249, 9000, 50):
             print(">>>> Delay for a five minutes to avoid being blocked.")
             time.sleep(300)
 
 
-def save_comments_to_csv(data):
-    with open(path + project_name + "_comments.csv", "a", newline='') as comments_file:
-        writer = csv.writer(comments_file)
-        writer.writerow(data)
-    return comments_file
-
-
-def save_reactors_to_csv(data):
-    with open(path + project_name + "_reactors.csv", "a", newline='') as reactors_file:
-        writer = csv.writer(reactors_file)
-        writer.writerow(data)
-    return reactors_file
-
-
-def save_posts_to_csv(data):
-    with open(path + project_name + "_posts.csv", "a", newline='') as posts_file:
-        writer = csv.writer(posts_file)
-        writer.writerow(data)
-    return posts_file
+def save_to_csv(file: str, row: list):
+    assert (file == 'comments' or file == 'posts' or file == 'reactors')
+    with open(f"{project_name}/{date}/{project_name}_{file}.csv", "a", newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(row)
+    return file
 
 
 def get_posts_from_fb(page: str):
     return get_posts(page,
                      pages=pages_no,
-                     cookies=cookie_file,
                      extra_info=True,
                      options={
                          "reactions": True,
@@ -157,13 +141,12 @@ def get_posts_from_fb(page: str):
 
 
 if __name__ == "__main__":
-    pages = ('MicrosoftUKEducation', 'Microsoft', 'Microsoft.Polska', 'MicrosoftCEE')
+    pages = ('Microsoft.Polska', 'Microsoft', 'MicrosoftCEE', 'MicrosoftUKEducation')
     project_name = "microsoft"
-    date = "08_12_2021"
-    pages_no = 10 # 100
-    cookie_file = "cookie.json"
-    path = project_name + '/' + date + '/'
-    first_run = False
+    date = "09_12_2021"
+    pages_no = 10
+    set_cookies("cookie.json")
+    first_run = True
 
     if first_run:
         create_output_files_struct()
