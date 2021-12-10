@@ -27,6 +27,8 @@ TBD
   - [Text translation](https://docs.microsoft.com/en-us/azure/cognitive-services/translator/)
   - [Sentiment analysis](https://docs.microsoft.com/en-us/azure/cognitive-services/language-service/sentiment-opinion-mining/overview)
 
+
+
 ## Recipe
 
 1. Provision resources: Azure Synapse Analytics, Azure Machine Learning (connect with the same storage account as was created for Synapse). 
@@ -62,9 +64,14 @@ TBD
 
    
 
-3. Pipeline
+![DataStages](https://raw.githubusercontent.com/ekote/sman-analytics/main/assets/data_stages.png) 
 
-   1. Parameters
+
+  3. Pipeline
+
+     1. Parameters
+
+
 
 
 
