@@ -63,13 +63,18 @@ TBD
       The 'as it should be' way described here`azureml/fb-scraper-pipeline.ipynb` 
 
    
-
+Data Stages:
 ![DataStages](https://raw.githubusercontent.com/ekote/sman-analytics/main/assets/data_stages.png) 
 
 
-  3. Pipeline
+Pipeline
+- connection with Azure ML
+![service_principal_azureml](https://raw.githubusercontent.com/ekote/sman-analytics/main/assets/service_principal_azureml.png) 
+- pipeline in Azure ML
+![AzureMLSP](https://raw.githubusercontent.com/ekote/sman-analytics/main/assets/azure_ml_pipeline.png) 
 
-     1. Parameters
+
+
 
 
 
