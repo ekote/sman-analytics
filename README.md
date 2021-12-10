@@ -14,7 +14,7 @@ TBD
 TBD
 
 Social Channel Sentiment Analytics Microsoft - Facebook Reviews with Reactions
-[![Social Channel Sentiment Analytics Microsoft - Facebook Reviews with Reactions](https://raw.githubusercontent.com/ekote/sman-analytics/main/assets/azure_ml_pipeline.png)](https://app.powerbi.com/view?r=eyJrIjoiZjgzMTg4MGQtNmUxNC00OGJhLThhY2MtNGJlNjcyMzM4YzVhIiwidCI6IjVmY2JhM2RlLTBkNGMtNGZlNi05ZjkwLTUyN2FhN2U2NjU5YyIsImMiOjl9&pageName=ReportSectionf4051e1182eb017d3e11)
+[![Social Channel Sentiment Analytics Microsoft - Facebook Reviews with Reactions](https://raw.githubusercontent.com/ekote/sman-analytics/main/assets/dashboard.png)](https://app.powerbi.com/view?r=eyJrIjoiZjgzMTg4MGQtNmUxNC00OGJhLThhY2MtNGJlNjcyMzM4YzVhIiwidCI6IjVmY2JhM2RlLTBkNGMtNGZlNi05ZjkwLTUyN2FhN2U2NjU5YyIsImMiOjl9&pageName=ReportSectionf4051e1182eb017d3e11)
 
 ![ArchDiagram](https://raw.githubusercontent.com/ekote/sman-analytics/main/assets/synapse-pipeline-diagram.png) 
 
